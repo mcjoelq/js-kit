@@ -7,17 +7,20 @@ environment:
 #install scripts. (runs after repo cloning)
 install:
   # Get the latest stable version of Node.js or io.js
-  - ps: Install-Product node $env:nodejs_version
-  # Install modules
-  - npm install
-
-#post-install test scripts
+  - ps: Install-Product node $env:nodejs_version x64
+  - set CI=true
+  - set PATH=%APPDATA%\npm;c:\MinGW\bin;%PATH%
+  - npm install -g npm@^5
+  - npm ci --ignore-scripts'
+matrix:
+  fast_finish: true
+build: off
+version: '{build}'
+shallow_clone: true
+clone_depth: 1
 test_script:
-  #output useful info for debugging
   - node --version
   - npm --version
-  # run test
   - npm test
-
-#don't build
-build: off
+skip_commits:
+  message: /\[ci\s+skip\]/
