@@ -1,7 +1,20 @@
+<!--This is a template HTML document.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
 		<meta	charset="utf-8">
+<% if (htmlWebpackPlugin.options.trackJsToken) { %>
+<!--Begin trackJS-->
+		<script>
+		    window._trackJs = {
+		        token: '<%= htmlWebpackPlugin.options.trackJsToken %>'
+									};
+		</script>
+		<script src="https://cdn.trackjs.com/releases/current/tracker.js">
+		</script>
+		<!--end trackJS-->
+<% } %>
 	</head>
 	<body>
 		<h1>Users</h1>

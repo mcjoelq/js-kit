@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import WebpackMd5Hash from 'webpack-md5-hash';
+import htmlWebpackPlugin from 'html-webpack-plugin';
+import webpackMd5Hash from 'webpack-md5-hash';
 
 export default {
   debug: true,
@@ -20,16 +20,29 @@ export default {
   plugins: [
 
 			// Hash the files using MD5 so that their names changes when the content changes.
-			new WebpackMd5Hash(),
+			new webpackMd5Hash(),
 
 			//use commonsCHunkPlugin to create a seperate bundle
 			new webpack.optimize.CommonsChunkPlugin({
 				name: 'vendor'
 			}),
 			//create html file that include referece to bundle.js
-			new HtmlWebpackPlugin({
+			new htmlWebpackPlugin({
 				template: 'src/index.html',
-				inject: true
+				minify:{
+					removeComments: true,
+					collaspeWhiteSpace: true,
+					removeRedundantAttributes: true,
+					userShortDoctype: true,
+					removeEmptyAttributes: true,
+					removeStyleLinkAttributes: true,
+					keepClosingSlash: true,
+					minifyJS: true,
+					minifyCSS: true,
+					minifyURLs: true,
+				},
+				inject: true,
+				trackJsToken: '3b31197cce704beebd36e3b5e2cb952a'
 			}),
 
 			//Eleminate duplicate packages when generating bundle.
